@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weather forecast</title>
+  <link rel="stylesheet" href="./CSS/style.css">
+  <link rel="icon" type="image/x-icon" href="./images/favicon.svg">
+</head>
+<body>
+  <div class="container">
+    <header class="default">
+      <div class="chosing-city">
+        <div class="logo">
+          <img src="./images/header-icon.svg" alt="sun">
+          <h1>weather api</h1>
+        </div>
+        <form class="your-city">
+          <label for="city-input">enter the name of the city</label>
+          <input type="text" id="city-input" required>
+          <button type="submit">Ok</button>
+        </form>
+      </div>
+    </header>
+    <main> 
+      <div class="weather">
+        <h2 class="cityName">
+        </h2>
+        <div class="icon">
+        </div>
+        <div class="temperature">
+        </div>
+      </div>
+    </main>
+  </div>
+  <script type="module" src="./JS/script.js"></script>
+  <script type="module" src="./JS/weatherApi.js"></script>
+  <script type="module" src="./JS/unsplashApi.js"></script>
+</body>
+</html>
