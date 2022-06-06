@@ -10,22 +10,31 @@
 </head>
 <body>
   <div class="container">
+    <div class="preloader">
+      <figure>
+        <img src="./images/header-icon.svg" alt="sun">
+        <figcaption>
+          <p>loading...</p>
+        </figcaption>
+      </figure>
+    </div>
     <header class="default">
-      <div class="chosing-city">
+      <div class="form-container">
         <div class="logo">
           <img src="./images/header-icon.svg" alt="sun">
           <h1>weather api</h1>
         </div>
         <form class="your-city">
           <label for="city-input">enter the name of the city</label>
-          <input type="text" id="city-input" required>
+          <input type="text" id="city-input" pattern="^[A-Za-zА-Яа-яЁё\s\-]+$" maxlength="30" required autofocus>
           <button type="submit">Ok</button>
+          <p class="alert-msg">No such city name in our database</p>
         </form>
       </div>
     </header>
     <main> 
       <div class="weather">
-        <h2 class="cityName">
+        <h2 class="city-name">
         </h2>
         <div class="icon">
         </div>
