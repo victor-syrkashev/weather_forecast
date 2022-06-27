@@ -6,29 +6,29 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Weather forecast</title>
   <link rel="stylesheet" href="./CSS/style.css">
-  <link rel="icon" type="image/x-icon" href="./images/favicon.svg">
+  <link rel="icon" type="image/x-icon" href="./public/images/favicon.svg">
 </head>
 <body>
   <div class="container">
     <div class="preloader">
       <figure>
-        <img src="./images/header-icon.svg" alt="sun">
+        <img src="./public/images/header-icon.svg" alt="sun">
         <figcaption>
           <p>loading...</p>
         </figcaption>
       </figure>
     </div>
-    <header class="default">
+    <header class="main-page">
       <div class="form-container">
         <div class="logo">
-          <img src="./images/header-icon.svg" alt="sun">
-          <h1>weather api</h1>
+          <img src="./public/images/header-icon.svg" alt="sun">
+          <h1>weather forecast</h1>
         </div>
         <form class="your-city">
-          <label for="city-input">enter the name of the city</label>
+          <label for="city-input">Введите название города</label>
           <input type="text" id="city-input" pattern="^[A-Za-zА-Яа-яЁё\s\-]+$" maxlength="30" required autofocus>
-          <button type="submit">Ok</button>
-          <p class="alert-msg">No such city name in our database</p>
+          <button type="submit" class="search-btn">Найти</button>
+          <button type="button" class="random-city-btn">Случайный город</button>
         </form>
       </div>
     </header>
@@ -40,11 +40,13 @@
         </div>
         <div class="temperature">
         </div>
+        <div class="pressure">
+        </div>
+        <div class="humidity">
+        </div>
       </div>
     </main>
   </div>
   <script type="module" src="./JS/script.js"></script>
-  <script type="module" src="./JS/weatherApi.js"></script>
-  <script type="module" src="./JS/unsplashApi.js"></script>
 </body>
 </html>
