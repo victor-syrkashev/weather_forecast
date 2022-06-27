@@ -1,7 +1,27 @@
-const appid = 'e1079f410170b27d84579337a97066eb';
+function getQueryVariable(variable) {
+  const queryVariables = {};
+  window.location.search
+    .substring(1)
+    .split('&')
+    .forEach((el) => {
+      const param = el.split('=');
+      queryVariables[param[0]] = param[1];
+    });
+  return queryVariables[variable];
+}
 
-const openWeather = (town) => fetch(`https://api.openweathermap.org/data/2.5/weather?q=${town}&units=metric&appid=${appid}`)
-  .then((response) => response.json())
-  .catch((err) => console.error(err));
+const appid = getQueryVariable('appid');
+const preloader = document.querySelector('.preloader');
 
-export default openWeather;
+const openWeather = (city) => {
+  preloader.classList.remove('hide-preloader');
+
+  return fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${appid}`)
+    .then((response) => response.json())
+    .catch((err) => {
+      console.log(err);
+      console.log('Something was wrong!!!');
+    });
+};
+
+export { openWeather };

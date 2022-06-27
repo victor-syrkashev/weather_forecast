@@ -25,8 +25,36 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
   z-index: -3;
+}
+
+.preloader {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: white;
+  display: grid;
+  place-items: center;
+  visibility: visible;
+  z-index: 999;
+}
+
+.preloader img {
+  animation: spin 3s infinite;
+}
+
+.preloader p {
+  margin-left: 0.6rem;
+}
+
+@keyframes spin {
+  100% {transform: rotate(360deg)} 
+}
+
+.hide-preloader {
+  z-index: -999;
+  visibility: hidden;
 }
 
 /* ---Header */
@@ -54,7 +82,7 @@ header {
   z-index: -1;
 }
 
-.chosing-city {
+.form-container {
   text-align: center;
   display: grid;
   place-items: center;
@@ -75,6 +103,7 @@ header {
   grid-template-columns: 1fr 2fr;
   place-items: center;
   margin-right: 2rem;
+  cursor: pointer;
 }
 
 .logo img:hover {
@@ -84,7 +113,8 @@ header {
 .your-city {
   display: grid;
   grid-template-areas: 'a a'
-                       'b c'; 
+                       'b c'
+                       'd d';
   gap: 0.5rem;
   align-self: flex-start;
 }
@@ -110,6 +140,20 @@ header {
   grid-area: b;
 }
 
+.alert-msg {
+  margin: 0;
+  color: #f44336;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  grid-area: d;
+  visibility: hidden;
+}
+
+.no-such-city {
+  box-shadow: 0 0 4px 4px #f44336;
+}
+
 h1, h2, .temperature {
   margin: 0;
   color: rgb(255, 255, 255);
@@ -132,7 +176,7 @@ main {
   text-align: center;
 }
 
-.cityName {
+.city-name {
   font-size: 3rem;
 }
 
