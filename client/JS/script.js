@@ -1,23 +1,24 @@
-// Constants
+import { checkDataFromOpenWeatherApi } from './utilities.js';
+
 const weatherIcons = {
-  '01d': '../public/images/weather-icons/clear-sky-day.png',
-  '01n': '../public/images/weather-icons/clear-sky-night.png',
-  '02d': '../public/images/weather-icons/few-clouds-day.png',
-  '02n': '../public/images/weather-icons/few-clouds-night.png',
-  '03d': '../public/images/weather-icons/scattered-clouds.png',
-  '03n': '../public/images/weather-icons/scattered-clouds.png',
-  '04d': '../public/images/weather-icons/broken-clouds.png',
-  '04n': '../public/images/weather-icons/broken-clouds.png',
-  '09d': '../public/images/weather-icons/shower-rain.png',
-  '09n': '../public/images/weather-icons/shower-rain.png',
-  '10d': '../public/images/weather-icons/rain-day.png',
-  '10n': '../public/images/weather-icons/rain-day.png',
-  '11d': '../public/images/weather-icons/thunderstorm.png',
-  '11n': '../public/images/weather-icons/thunderstorm.png',
-  '13d': '../public/images/weather-icons/snow.png',
-  '13n': '../public/images/weather-icons/snow.png',
-  '50d': '../public/images/weather-icons/mist-day.png',
-  '50n': '../public/images/weather-icons/mist-night.png',
+  '01d': 'assets/public/images/weather-icons/clear-sky-day.png',
+  '01n': 'assets/public/images/weather-icons/clear-sky-night.png',
+  '02d': 'assets/public/images/weather-icons/few-clouds-day.png',
+  '02n': 'assets/public/images/weather-icons/few-clouds-night.png',
+  '03d': 'assets/public/images/weather-icons/scattered-clouds.png',
+  '03n': 'assets/public/images/weather-icons/scattered-clouds.png',
+  '04d': 'assets/public/images/weather-icons/broken-clouds.png',
+  '04n': 'assets/public/images/weather-icons/broken-clouds.png',
+  '09d': 'assets/public/images/weather-icons/shower-rain.png',
+  '09n': 'assets/public/images/weather-icons/shower-rain.png',
+  '10d': 'assets/public/images/weather-icons/rain-day.png',
+  '10n': 'assets/public/images/weather-icons/rain-day.png',
+  '11d': 'assets/public/images/weather-icons/thunderstorm.png',
+  '11n': 'assets/public/images/weather-icons/thunderstorm.png',
+  '13d': 'assets/public/images/weather-icons/snow.png',
+  '13n': 'assets/public/images/weather-icons/snow.png',
+  '50d': 'assets/public/images/weather-icons/mist-day.png',
+  '50n': 'assets/public/images/weather-icons/mist-night.png',
 };
 
 const container = document.querySelector('.container');
@@ -35,6 +36,7 @@ const pressure = document.querySelector('.pressure');
 const humidity = document.querySelector('.humidity');
 const preloader = document.querySelector('.preloader');
 const randomCityBtn = document.querySelector('.random-city-btn');
+const pressureConvertFactor = 0.75008;
 
 window.addEventListener('load', () => {
   preloader.classList.add('hide-preloader');
@@ -43,61 +45,52 @@ logo.addEventListener('click', () => {
   showMainPage();
 });
 
-// Submit form
 form.addEventListener('submit', (e) => {
   e.preventDefault();
-
   preloader.classList.remove('hide-preloader');
   hideMainPage();
   cityInput.classList.remove('no-such-city');
   cityInput.setAttribute('disabled', 'disabled');
-
-  sendGetRequestToTheServer(`/index.html/search?q=${cityInput.value}`);
+  sendGetRequestToTheServer(`/api/search?q=${cityInput.value}`);
 });
-
-// Click random-city-button
 
 randomCityBtn.addEventListener('click', (e) => {
   e.preventDefault();
-
   preloader.classList.remove('hide-preloader');
   hideMainPage();
   cityInput.classList.remove('no-such-city');
   cityInput.setAttribute('disabled', 'disabled');
   cityInput.value = '';
-
-  sendGetRequestToTheServer('/index.html/random');
+  sendGetRequestToTheServer('/api/random');
 });
 
-// functions
 function sendGetRequestToTheServer(url) {
   fetch(url)
     .then((res) => res.json())
     .then((data) => {
-      if (data.photo && data.photo.errors !== undefined) {
-        errorHandlerUnsplashApi(data.photo);
+      if (data.unsplashResponse && data.unsplashResponse.errors !== undefined) {
+        errorHandlerUnsplashApi(data.unsplashResponse);
         return;
       }
-      if (data.openWeather.cod !== 200) {
-        errorHandlerOpenWeatherApi(data.openWeather);
+      if (data.openWeatherResponse.cod !== 200) {
+        errorHandlerOpenWeatherApi(data.openWeatherResponse);
         return;
       }
-      if (!checkDataFromOpenWeatherApi(data.openWeather)) {
-        errorWindow();
-        console.log('Нет необходимой информации о погоде в ответе c сервера');
+      if (!checkDataFromOpenWeatherApi(data.openWeatherResponse)) {
+        showError();
         return;
       }
+
       cityName.textContent = capitalize(data.cityName);
-      icon.innerHTML = `<img src=${weatherIcons[data.openWeather.weather[0].icon]} alt="weather-icon">`;
-      temperature.textContent = showTemperature(data.openWeather.main.temp);
-      pressure.innerHTML = `Давление ${Math.round(0.75008 * data.openWeather.main.pressure)}мм.рт.ст.`;
-      humidity.innerHTML = `Влажность ${data.openWeather.main.humidity}%`;
-      const backgroundUrl = data.photo.results[0].urls.regular;
+      icon.innerHTML = `<img src=${weatherIcons[data.openWeatherResponse.weather[0].icon]} alt="weather-icon">`;
+      temperature.textContent = showTemperature(data.openWeatherResponse.main.temp);
+      pressure.innerHTML = `Давление ${Math.round(pressureConvertFactor * data.openWeatherResponse.main.pressure)}мм.рт.ст.`;
+      humidity.innerHTML = `Влажность ${data.openWeatherResponse.main.humidity}%`;
+      const backgroundUrl = data.unsplashResponse.urls.regular;
       container.style.background = `url(${backgroundUrl}) center/cover no-repeat`;
       preloader.classList.add('hide-preloader');
       cityInput.removeAttribute('disabled', 'disabled');
-    })
-    .catch((err) => console.log(err));
+    });
 }
 
 function showMainPage() {
@@ -136,26 +129,10 @@ function showTemperature(temp) {
   return str;
 }
 
-function checkData(data) {
-  if (!data || data === NaN || data === undefined) {
-    return false;
-  }
-}
-
-function checkDataFromOpenWeatherApi(data) {
-  const array = [data.weather[0].icon, data.main.temp, data.main.pressure, data.main.humidity, data.weather[0].main];
-  for (let i = 0; i < array.length; i++) {
-    if (checkData(array[i]) === false) {
-      return false;
-    }
-  }
-  return true;
-}
-
-function errorWindow(errorMsg) {
+function showError(errorMsg) {
   preloader.classList.add('hide-preloader');
   cityInput.removeAttribute('disabled', 'disabled');
-  container.style.background = 'url(./public/images/alert.jpg) center/cover no-repeat';
+  container.style.background = 'url(assets/public/images/alert.jpg) center/cover no-repeat';
 
   if (errorMsg) {
     temperature.innerHTML = errorMsg;
@@ -173,28 +150,21 @@ function errorHandlerOpenWeatherApi(data) {
   if (data.cod === '404') {
     if (data.message === 'city not found') {
       cityInput.classList.add('no-such-city');
-      errorWindow('Город не найден. Проверьте правильность написания');
-      return console.log('city not found');
+      showError('Город не найден. Проверьте правильность написания');
+      return;
     }
-    errorWindow();
+    showError();
   } else if (data.cod === 401) {
-    errorWindow();
-    console.log('error. invalid AppId OpenWeather');
+    showError();
   } else if (data.cod === '400') {
-    errorWindow();
-    console.log('error. nothing to geocode');
+    showError();
   }
 }
 
 function errorHandlerUnsplashApi(data) {
   if (data.errors[0] === 'OAuth error: The access token is invalid') {
-    errorWindow();
-    console.log('error. invalid access key unsplash');
-  } else if (data.errors[0] === 'query is missing') {
-    errorWindow();
-    console.log('error. query is missing');
-  } else if (data.errors[0] === 'Not found') {
-    errorWindow();
-    console.log('error. not found');
+    showError();
+  } else if (data.errors[0] === `Couldn't find Photo`) {
+    showError();
   }
 }

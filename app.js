@@ -4,10 +4,8 @@ const axios = require('axios');
 const app = express();
 const port = 3000;
 
-// Constants
-
-const appid = process.env.APP_ID;
-const accessKey = process.env.ACCESS_KEY;
+const openWeatherAppId = process.env.APP_ID;
+const unsplashAccessKey = process.env.ACCESS_KEY;
 
 const weatherKeywords = {
   thunderstorm: 'thunderstorm',
@@ -27,49 +25,61 @@ const weatherKeywords = {
   tornado: 'tornado',
 };
 
-const listOfCity = ['Москва', 'Санкт-Петербург', 'Новосибирск', 'Екатеринбург', 'Казань', 'Нижний Новгород', 'Челябинск', 'Самара', 'Уфа', 'Ростов-на-Дону', 'Омск', 'Томск', 'Красноярск', 'Воронеж', 'Пермь', 'Волгоград', 'Краснодар', 'Тюмень', 'Новосибирск', 'Барнаул', 'Кемерово', 'Новокузнецк', 'Саратов', 'Ижевск', 'Тольятти'];
+const listOfCity = ['Москва', 'Санкт-Петербург', 'Новосибирск',
+  'Екатеринбург', 'Казань', 'Нижний Новгород', 'Челябинск',
+  'Самара', 'Уфа', 'Ростов-на-Дону', 'Омск', 'Томск',
+  'Красноярск', 'Воронеж', 'Пермь', 'Волгоград', 'Краснодар',
+  'Тюмень', 'Новосибирск', 'Барнаул', 'Кемерово', 'Новокузнецк',
+  'Саратов', 'Ижевск', 'Тольятти'];
 
-// functions
 function requestToOpenWeatherApi(city, apiKey) {
   return axios(`https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(city)}&units=metric&appid=${apiKey}`);
 }
 
 function requestToUnsplashApi(keyword, apiKey) {
-  return axios(`https://api.unsplash.com/search/photos?query=${encodeURIComponent(keyword)}&page=1&per_page=1&orientation=landscape&client_id=${apiKey}`);
+  return axios(`https://api.unsplash.com/photos/random?query=${encodeURIComponent(keyword)}&orientation=landscape&client_id=${apiKey}`);
 }
 
 function sendRequests(city, res) {
-  requestToOpenWeatherApi(city, appid)
+  requestToOpenWeatherApi(city, openWeatherAppId)
     .then((resOpenWeather) => {
       const weather = weatherKeywords[resOpenWeather.data.weather[0].main.toLowerCase()];
-      requestToUnsplashApi(weather, accessKey)
+      requestToUnsplashApi(weather, unsplashAccessKey)
         .then((resUnsplash) => {
-          res.json({ openWeather: resOpenWeather.data, photo: resUnsplash.data, cityName: city });
+          res.json({
+            openWeatherResponse: resOpenWeather.data,
+            unsplashResponse: resUnsplash.data,
+            cityName: city,
+          });
         })
         .catch((error) => {
-          res.json({ photo: error.response.data });
+          res.json({ unsplashResponse: error.response.data });
         });
     })
-    .catch((error) => res.json({ openWeather: error.response.data }));
+    .catch((error) => res.json({ openWeatherResponse: error.response.data }));
 }
 
-app.get('/index.html/search', (req, res) => {
+app.get('/api/search', (req, res) => {
   const city = req.query.q;
   sendRequests(city, res);
 });
 
-app.get('/index.html/random', (req, res) => {
+app.get('/api/random', (req, res) => {
   const randomIndex = Math.floor(Math.random() * listOfCity.length);
   const city = listOfCity[randomIndex];
   sendRequests(city, res);
 });
 
-app.use(express.static(__dirname + '/client'));
+app.use('/assets', express.static(__dirname + '/client'));
 
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
   res.sendFile(__dirname + '/client/index.html');
 });
 
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/client/404.html');
+});
+
 app.listen(port, () => {
-  console.log(`App.js listening on port ${port}`);
+  console.log(`Server listening on port ${port}`);
 });
