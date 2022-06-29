@@ -4,8 +4,8 @@ const axios = require('axios');
 const app = express();
 const port = 3000;
 
-const openWeatherAppId = process.env.APP_ID;
-const unsplashAccessKey = process.env.ACCESS_KEY;
+const openWeatherAppId = process.env.openWeatherAppId;
+const unsplashAccessKey = process.env.unsplashAccessKey;
 
 const weatherKeywords = {
   thunderstorm: 'thunderstorm',

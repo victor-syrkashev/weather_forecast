@@ -1,24 +1,24 @@
 import { checkDataFromOpenWeatherApi } from './utilities.js';
 
 const weatherIcons = {
-  '01d': 'assets/public/images/weather-icons/clear-sky-day.png',
-  '01n': 'assets/public/images/weather-icons/clear-sky-night.png',
-  '02d': 'assets/public/images/weather-icons/few-clouds-day.png',
-  '02n': 'assets/public/images/weather-icons/few-clouds-night.png',
-  '03d': 'assets/public/images/weather-icons/scattered-clouds.png',
-  '03n': 'assets/public/images/weather-icons/scattered-clouds.png',
-  '04d': 'assets/public/images/weather-icons/broken-clouds.png',
-  '04n': 'assets/public/images/weather-icons/broken-clouds.png',
-  '09d': 'assets/public/images/weather-icons/shower-rain.png',
-  '09n': 'assets/public/images/weather-icons/shower-rain.png',
-  '10d': 'assets/public/images/weather-icons/rain-day.png',
-  '10n': 'assets/public/images/weather-icons/rain-day.png',
-  '11d': 'assets/public/images/weather-icons/thunderstorm.png',
-  '11n': 'assets/public/images/weather-icons/thunderstorm.png',
-  '13d': 'assets/public/images/weather-icons/snow.png',
-  '13n': 'assets/public/images/weather-icons/snow.png',
-  '50d': 'assets/public/images/weather-icons/mist-day.png',
-  '50n': 'assets/public/images/weather-icons/mist-night.png',
+  '01d': '/assets/public/images/weather-icons/clear-sky-day.png',
+  '01n': '/assets/public/images/weather-icons/clear-sky-night.png',
+  '02d': '/assets/public/images/weather-icons/few-clouds-day.png',
+  '02n': '/assets/public/images/weather-icons/few-clouds-night.png',
+  '03d': '/assets/public/images/weather-icons/scattered-clouds.png',
+  '03n': '/assets/public/images/weather-icons/scattered-clouds.png',
+  '04d': '/assets/public/images/weather-icons/broken-clouds.png',
+  '04n': '/assets/public/images/weather-icons/broken-clouds.png',
+  '09d': '/assets/public/images/weather-icons/shower-rain.png',
+  '09n': '/assets/public/images/weather-icons/shower-rain.png',
+  '10d': '/assets/public/images/weather-icons/rain-day.png',
+  '10n': '/assets/public/images/weather-icons/rain-day.png',
+  '11d': '/assets/public/images/weather-icons/thunderstorm.png',
+  '11n': '/assets/public/images/weather-icons/thunderstorm.png',
+  '13d': '/assets/public/images/weather-icons/snow.png',
+  '13n': '/assets/public/images/weather-icons/snow.png',
+  '50d': '/assets/public/images/weather-icons/mist-day.png',
+  '50n': '/assets/public/images/weather-icons/mist-night.png',
 };
 
 const container = document.querySelector('.container');
@@ -132,7 +132,7 @@ function showTemperature(temp) {
 function showError(errorMsg) {
   preloader.classList.add('hide-preloader');
   cityInput.removeAttribute('disabled', 'disabled');
-  container.style.background = 'url(assets/public/images/alert.jpg) center/cover no-repeat';
+  container.style.background = 'url(/assets/public/images/alert.jpg) center/cover no-repeat';
 
   if (errorMsg) {
     temperature.innerHTML = errorMsg;
