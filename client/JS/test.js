@@ -1,6 +1,6 @@
-import { checkDataFromOpenWeatherApi } from "./utilities.js";
+import { checkDataFromOpenWeatherApi } from './utilities.js';
 
-function tests() {
+(function tests() {
   function fullData() {
     const data = {
       main: {
@@ -8,10 +8,12 @@ function tests() {
         humidity: 66,
         temp: 24,
       },
-      weather: [{
-        icon: '01d',
-        main: 'clear sky',
-      }],
+      weather: [
+        {
+          icon: '01d',
+          main: 'clear sky',
+        },
+      ],
     };
     if (checkDataFromOpenWeatherApi(data) === true) {
       console.log('PASS: fullData');
@@ -73,10 +75,12 @@ function tests() {
   function mainFalsy() {
     const data = {
       main: 0,
-      weather: [{
-        icon: '01d',
-        main: 'clear sky',
-      }],
+      weather: [
+        {
+          icon: '01d',
+          main: 'clear sky',
+        },
+      ],
     };
     if (checkDataFromOpenWeatherApi(data) === false) {
       console.log('PASS: mainFalsy');
@@ -92,10 +96,12 @@ function tests() {
         humidity: 66,
         temp: 24,
       },
-      weather: [{
-        icon: undefined,
-        main: 'clear sky',
-      }],
+      weather: [
+        {
+          icon: undefined,
+          main: 'clear sky',
+        },
+      ],
     };
     if (checkDataFromOpenWeatherApi(data) === false) {
       console.log('PASS: dataWeatherArrayIconFalsy');
@@ -111,10 +117,12 @@ function tests() {
         humidity: 66,
         temp: 24,
       },
-      weather: [{
-        icon: 0,
-        main: 'clear sky',
-      }],
+      weather: [
+        {
+          icon: 0,
+          main: 'clear sky',
+        },
+      ],
     };
     if (checkDataFromOpenWeatherApi(data) === false) {
       console.log('PASS: dataMainPressureFalsy');
@@ -130,10 +138,12 @@ function tests() {
         humidity: 66,
         temp: 0,
       },
-      weather: [{
-        icon: 0,
-        main: 'clear sky',
-      }],
+      weather: [
+        {
+          icon: 0,
+          main: 'clear sky',
+        },
+      ],
     };
     if (checkDataFromOpenWeatherApi(data) === true) {
       console.log('PASS: dataMainZeroTempTrue');
@@ -161,6 +171,4 @@ function tests() {
   console.log('---------------------');
   dataMainZeroTempTrue();
   console.log('=====================');
-}
-
-tests();
+})();

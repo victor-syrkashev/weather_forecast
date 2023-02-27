@@ -1,5 +1,3 @@
-export { checkDataFromOpenWeatherApi };
-
 function checkDataFromOpenWeatherApi(data) {
   if (!data || Object.keys(data).length < 2) {
     return false;
@@ -7,8 +5,13 @@ function checkDataFromOpenWeatherApi(data) {
   if (!data.weather || !data.weather[0] || !data.main) {
     return false;
   }
-  const array = [data.weather[0].icon, data.main.temp,
-    data.main.pressure, data.main.humidity, data.weather[0].main];
+  const array = [
+    data.weather[0].icon,
+    data.main.temp,
+    data.main.pressure,
+    data.main.humidity,
+    data.weather[0].main,
+  ];
   for (let i = 0; i < array.length; i++) {
     if (!array[i] && array[i] !== 0) {
       return false;
@@ -16,3 +19,5 @@ function checkDataFromOpenWeatherApi(data) {
   }
   return true;
 }
+
+export { checkDataFromOpenWeatherApi };

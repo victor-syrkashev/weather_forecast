@@ -1,51 +1,52 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Weather forecast</title>
-  <link rel="stylesheet" href="/assets/css/style.css">
-  <link rel="icon" type="image/x-icon" href="/assets/public/images/favicon.svg">
-</head>
-<body>
-  <div class="container" style="background: url(/assets/public/images/alert.jpg) center/cover no-repeat;">
-    <div class="preloader hide-preloader">
-      <figure>
-        <img src="/assets/public/images/header-icon.svg" alt="sun">
-        <figcaption>
-          <p>loading...</p>
-        </figcaption>
-      </figure>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather forecast | ER404</title>
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="icon" type="image/x-icon" href="/assets/images/favicon.svg" />
+  </head>
+  <body>
+    <div
+      class="container"
+      style="background: url(/assets/images/alert.jpg) center/cover no-repeat"
+    >
+      <div class="preloader hide-preloader">
+        <figure>
+          <img src="/assets/images/header-icon.svg" alt="sun" />
+          <figcaption>
+            <p>loading...</p>
+          </figcaption>
+        </figure>
+      </div>
+      <header>
+        <div class="form-container hide page-404">
+          <div class="logo" onclick="window.location.href='/'">
+            <img
+              src="/assets/images/header-icon.svg"
+              alt="sun"
+              style="transform: scale(0.7)"
+            />
+            <h1 class="mini">weather forecast</h1>
+          </div>
+        </div>
+      </header>
+      <main>
+        <div class="weather page-404">
+          <h2 class="city-name">
+            <b>404</b>
+          </h2>
+          <div class="icon"></div>
+          <div class="temperature page-404">Страница не найдена</div>
+          <div class="pressure"></div>
+          <div class="humidity">
+            неправильно набран адрес или такой страницы не существует<br />
+            <a href="/">на главную</a>
+          </div>
+        </div>
+      </main>
     </div>
-    <header>
-      <div class="form-container hide page-404">
-        <div class="logo" onclick="window.location.href='/'">
-          <img src="/assets/public/images/header-icon.svg" alt="sun" style="transform: scale(0.7);">
-          <h1 class="mini">weather forecast</h1>
-        </div>
-        
-      </div>
-    </header>
-    <main> 
-      <div class="weather page-404">
-        <h2 class="city-name">
-          <b>404</b>
-        </h2>
-        <div class="icon">
-        </div>
-        <div class="temperature page-404">
-          Страница не найдена
-        </div>
-        <div class="pressure">
-        </div>
-        <div class="humidity">
-          неправильно набран адресс или такой страницы не существует<br>
-          <a href="/" >на главную</a>
-        </div>
-      </div>
-    </main>
-  </div>
-  <script type="module" src="/assets/js/script.js"></script>
-</body>
+  </body>
 </html>
