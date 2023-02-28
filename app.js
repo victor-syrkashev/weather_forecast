@@ -72,8 +72,8 @@ function requestToUnsplashApi(keyword, apiKey) {
 function sendRequests(city, res) {
   requestToOpenWeatherApi(city, openWeatherAppId)
     .then((resOpenWeather) => {
-      const weather =
-        weatherKeywords[resOpenWeather.data.weather[0].main.toLowerCase()];
+      const resWeather = resOpenWeather.data.weather[0].main.toLowerCase();
+      const weather = weatherKeywords[resWeather];
       requestToUnsplashApi(weather, unsplashAccessKey)
         .then((resUnsplash) => {
           res.json({
