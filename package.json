@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "unsplashAccessKey=mo5bttz_Q-h7dwuQAz__mFtvLaNjcUKn8wQ6Ni_PIWY openWeatherAppId=e1079f410170b27d84579337a97066eb nodemon app.js",
-    "test": "node client/js/test.js"
+    "start": "node app.js",
+    "test": "node client/js/test.mjs"
   },
   "repository": {
     "type": "git",

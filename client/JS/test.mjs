@@ -1,4 +1,4 @@
-import { checkDataFromOpenWeatherApi } from './utilities.js';
+import { checkDataFromOpenWeatherApi } from './utilities.mjs';
 
 (function tests() {
   function fullData() {

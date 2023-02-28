@@ -1,4 +1,4 @@
-import { checkDataFromOpenWeatherApi } from './utilities.js';
+import { checkDataFromOpenWeatherApi } from './utilities.mjs';
 
 const weatherIcons = {
   '01d': '/assets/images/weather-icons/clear-sky-day.png',
@@ -56,26 +56,6 @@ function hideMainPage() {
   form.style.alignSelf = 'center';
   form.classList.add('mini');
   logoImg.style.transform = 'scale(0.7)';
-}
-
-function capitalize(string, separator) {
-  const strArray = string.split(separator);
-  strArray.forEach((word, index, array) => {
-    const capitalizedWord = word.charAt(0).toUpperCase() + word.slice(1);
-    array[index] = capitalizedWord;
-  });
-  const capitalizeString = strArray.join(separator);
-  return capitalizeString;
-}
-
-function convertString(str) {
-  str = str.trim();
-
-  if (str.includes('-')) {
-    return capitalize(str, '-');
-  }
-
-  return capitalize(str, ' ');
 }
 
 function showTemperature(temp) {
@@ -146,7 +126,7 @@ function sendGetRequestToTheServer(url) {
       const resTemperature = data.openWeatherResponse.main.temp;
       const resPressure = data.openWeatherResponse.main.pressure;
       const resPressureMmHg = Math.round(pressureConvertFactor * resPressure);
-      cityName.textContent = convertString(data.cityName);
+      cityName.textContent = data.cityName;
       icon.innerHTML = `<img src=${
         weatherIcons[data.openWeatherResponse.weather[0].icon]
       } alt="weather-icon">`;
@@ -166,7 +146,7 @@ function sendForm(e) {
   hideMainPage();
   cityInput.classList.remove('no-such-city');
   cityInput.setAttribute('disabled', '');
-  sendGetRequestToTheServer(`/api/search?q=${cityInput.value}`);
+  sendGetRequestToTheServer(`/api/search?q=${cityInput.value.trim()}`);
 }
 
 function getRandomCityWeather(e) {
